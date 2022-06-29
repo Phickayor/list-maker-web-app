@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>My To-Do List</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<link rel="stylesheet" href="todolist.css">
+</head>
+<body>
+<script>
+var app = angular.module("toDoList",[]);
+app.controller("listCtrl",function($scope){
+$scope.header =prompt("Input List heading");
+if($scope.header == ""){
+$scope.header = "Your list";
+}
+$scope.listItems = [];
+$scope.addItem = function(){
+if($scope.input != ""){
+	if($scope.listItems.indexOf($scope.input) == -1){
+		$scope.listItems.push($scope.input);
+		$scope.input = "";
+	}
+	else{
+		alert("This item is already on your list");
+		$scope.input = "";
+	}
+}
+else{
+	alert("Add an an item to your list");
+}
+}
+$scope.removeItem = function(x){
+$scope.listItems.splice(x,1);
+}
+//Cross out Function using del tag
+/*$scope.crossOut = function(x){
+$scope.listItems
+}*/
+});
+
+ 
+</script>
+<div ng-app="toDoList" ng-controller="listCtrl">
+<h1>List Maker</h1>
+<input type="text" ng-model="input" placeholder="Add to your list Item"/><br><br>
+<button class="btn" ng-click="addItem()">Add</button>
+<u><h2 ng-bind="header| uppercase"></h2></u>
+<div id="displayArea">
+<ul>
+<li ng-repeat="x in listItems">
+{{x}}
+<span ng-click="removeItem()">&times;</span>
+</li>
+</ul>
+</div>
+</div>
+</body>
+</html>
